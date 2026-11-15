@@ -1,7 +1,9 @@
 # Aturan Codex — EnterpriseOS Frontend
 
-Bahasa UI/dokumentasi Indonesia. Kerjakan semua project command dari WSL/Linux root checkout; jangan campur Windows Node dengan WSL filesystem. Baca README.md dan docs/README.md, route map, design system, API contract backend dan spesifikasi modul sebelum coding.
+Bahasa UI/dokumentasi Indonesia. Jalankan command dari WSL/Linux root checkout dan ikuti lockfile. Baca README/docs index, route/design system, backend OpenAPI, privacy dan spesifikasi modul sebelum coding.
 
-Stack final React + TypeScript + Vite + shadcn/ui. Gunakan komponen accessible, typed API client, feature folder. Frontend bukan enforcement security: jangan anggap hidden button sebagai authz; backend menentukan akses. Jangan menyimpan token di localStorage; pakai pola OIDC PKCE yang aman (prefer BFF/cookie bila deploy mampu, atau library OIDC yang mendukung in-memory session dan state/nonce/PKCE; catat trade-off). Jangan log payload/token/PII. Jangan tambahkan paid UI/API providers atau dependency tanpa kebutuhan/ADR.
+Stack React + TypeScript + Vite + shadcn/ui. Frontend hanya UX; backend adalah otoritas akses dan policy. Jangan simpan access/refresh token di localStorage atau log token/PII. Gunakan OIDC PKCE sesuai keputusan auth frontend; jangan menciptakan secret di browser.
 
-Satu task per perubahan. Update route map, API consumption, loading/empty/error/unauthorized states dan skenario test. Jalankan package manager yang terkunci package-lock/pnpm-lock dari WSL, lint/typecheck/test/build yang benar-benar tersedia; jangan klaim test tanpa hasil. Data fixture wajib fiktif. Jangan memasang custom domain berbayar atau layanan berbayar.
+Untuk attendance, minta kamera/GPS hanya saat aksi punch dan jelaskan tujuan. Foto upload langsung ke private Supabase bucket melalui signed URL backend yang singkat; jangan proxy bytes melalui Vercel. Jangan simpan signed URL permanen, koordinat di URL/localStorage/analytics, melakukan background tracking, atau face recognition. WFO kecamatan ditampilkan dari location config backend; jangan geolocate IP dari frontend. WFH/WFA memperlihatkan status persetujuan dan alasan.
+
+Satu task per perubahan. Implementasikan state loading/empty/error/unauthorized/offline/quota-full dan aksesibilitas keyboard. Uji mocked contract sesuai OpenAPI; laporkan command yang benar-benar dijalankan. Semua fixture organisasi, akun, foto dan koordinat sintetis.
