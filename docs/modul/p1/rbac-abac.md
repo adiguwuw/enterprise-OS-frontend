@@ -39,3 +39,7 @@ Loading; populated; empty dengan CTA aman; field validation; API/network error +
 
 ## TDD component/E2E
 Mock sesuai OpenAPI fixture; uji render states, submit success dan error, no duplicate submit, stale version recovery, permission-limited direct route, keyboard navigation dan viewport sempit. E2E data sintetis; hindari production account.
+
+
+## Role presensi pada UI
+UI menampilkan capability sesuai role/scope dari API. Employee melihat data sendiri; Manager hanya timnya; Attendance Policy Admin mengelola policy/lokasi/CIDR assigned namun tidak otomatis melihat foto; Attendance Policy Approver menyetujui versi oleh admin lain; HR Attendance Admin mengakses laporan/koreksi scope HR; Auditor melihat audit/policy history tanpa foto secara default. Org Admin, IAM Admin dan Platform Admin tidak mendapat akses HR implisit. Direct route tetap backend-protected.
