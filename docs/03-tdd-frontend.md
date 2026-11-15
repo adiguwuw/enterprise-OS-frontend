@@ -25,3 +25,12 @@ F-01 unauthenticated redirect; F-02 OIDC state/nonce error; F-03 permission nav;
 - FA-15 error telemetry excludes image, coordinates, reasons and signed URL.
 
 Test with synthetic fixtures and mocked browser media/location; no real employee evidence. Merge gate follows lockfile and actual available format/lint/typecheck/test/build commands.
+
+
+## Test Dashboard Admin presensi
+- FA-16 admin mengisi policy dengan reason/effective date dan melihat validasi server.
+- FA-17 non-admin atau admin di luar scope tidak dapat membaca/mengubah policy.
+- FA-18 riwayat menunjukkan versi, actor, alasan dan before/after; versi lama read-only.
+- FA-19 maker-checker aktif: creator tidak dapat menyetujui versi sendiri.
+- FA-20 overlap/stale If-Match/validation failure tidak mengubah policy yang ditampilkan sebagai aktif; draft aman tetap tersedia.
+- FA-21 UI tidak menghitung ulang histori punch setelah policy berubah; detail menunjukkan policy version yang dipakai.
