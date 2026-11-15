@@ -34,3 +34,6 @@ Test with synthetic fixtures and mocked browser media/location; no real employee
 - FA-19 maker-checker aktif: creator tidak dapat menyetujui versi sendiri.
 - FA-20 overlap/stale If-Match/validation failure tidak mengubah policy yang ditampilkan sebagai aktif; draft aman tetap tersedia.
 - FA-21 UI tidak menghitung ulang histori punch setelah policy berubah; detail menunjukkan policy version yang dipakai.
+- FA-22 seed dashboard menunjukkan nilai demo dan bounds; nilai out-of-bounds ditolak backend dan UI memetakan error.
+- FA-23 office CIDR belum terverifikasi tampil nonaktif; WFO tidak ditandai siap sampai API menyatakan verified.
+- FA-24 role menu sesuai matriks: policy admin tidak otomatis membuka evidence; Platform/IAM Admin tidak otomatis membuka data HR; direct URL tetap 403.
