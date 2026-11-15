@@ -1,41 +1,33 @@
 # Frontend — Attendance
 
-Referensi source of truth backend: https://github.com/adiguwuw/enterprise-OS-backend/blob/main/docs/modul/p2/attendance.md
+Backend source of truth: https://github.com/adiguwuw/enterprise-OS-backend/blob/main/docs/modul/p2/attendance.md
 
-## Tujuan UI
-Menyediakan alur operator/employee untuk attendance tanpa menggandakan aturan bisnis atau otorisasi backend. API backend menentukan field, state, validasi dan akses.
+## Tujuan dan aktor
+Employee mengajukan WFH/WFA dan punch dengan foto + lokasi. Manager memutus request dan meninjau evidence dalam scope. HR melihat konfigurasi dan exception sesuai izin. Frontend tidak membuat keputusan IP, radius, approval atau authz.
 
-## Route dan halaman
-- /app/attendance: ringkasan/list dengan pencarian, filter dan cursor pagination sesuai endpoint backend.
-- /app/attendance/new: form create hanya bila tersedia izin action.
-- /app/attendance/:id: detail, status lifecycle, riwayat perubahan dan action yang diizinkan.
-- /app/attendance/:id/edit: hanya untuk data mutable; If-Match/ETag saat simpan.
-- /app/attendance/admin: policy/configuration jika relevan, terpisah dari halaman employee.
+## Routes
+- /app/attendance — policy hari ini, riwayat dan receipt punch.
+- /app/attendance/punch — wizard check-in/out.
+- /app/attendance/remote-work/new dan /app/attendance/remote-work — request dan status.
+- /app/manager/attendance/requests — approval queue scoped.
+- /app/manager/attendance/team — attendance review scoped.
+- /app/attendance/adjustments — correction flow bila granted.
 
-## API yang dikonsumsi
-- POST /api/v1/attendance/punches
-- GET /api/v1/attendance/me?from=&to=
-- POST /api/v1/attendance/adjustments
-- POST /api/v1/attendance/adjustments/{id}/approve
-- GET /api/v1/attendance/team
-Typed API client mengikuti kontrak backend; tidak memanggil database atau IdP admin API langsung dari browser. Use cursor, abort request saat filter berubah, dan request ID untuk error. Submit command idempotent memakai key yang sama saat retry; update mengirim If-Match.
+## API
+POST /api/v1/attendance/remote-work-requests; GET /attendance/remote-work-requests/me; GET /attendance/remote-work-requests/pending; POST /attendance/remote-work-requests/{id}/decision; POST /attendance/evidence-upload-intents; POST /attendance/evidence-upload-intents/{id}/confirm; POST /attendance/punches; GET /attendance/me; GET /attendance/team; GET /attendance/punches/{id}/evidence-url; adjustment endpoints. Typed client mengikuti OpenAPI, abort stale queries, request ID error display, idempotency key stable saat retry.
 
-## Komponen dan pola interaksi
-DataTable/filter toolbar, detail panel/page, controlled form, status badge berlabel, approval/action confirmation, timeline bila API menyediakan history. Jangan membuat nilai/threshold/policy sendiri. Masking mengikuti respons server. Untuk private role domain (HR/payroll), gunakan halaman terpisah dengan no-store dan jangan cache persisten.
+## Employee flow
+1. Pilih WFH/WFA, periode, label area dan alasan wajib; submit.
+2. Tampilkan status dan alasan keputusan atasan. Remote punch aktif hanya bila request approved mencakup tanggal lokal.
+3. Pada klik punch, minta izin kamera/GPS; bukan saat membuka halaman. Preview/retake/cancel. Tampilkan GPS accuracy/time, work mode dan instruksi lokasi.
+4. Minta upload intent backend, unggah file langsung ke private Supabase dengan signed URL/headers, confirm upload, lalu kirim punch metadata. Jangan kirim byte foto melalui API/Vercel.
+5. Tampilkan receipt hanya setelah API sukses. Retry expired URL dengan intent baru dan idempotency key punch yang sama; storage quota error bukan sukses.
 
-## State UX wajib
-Loading; populated; empty dengan CTA aman; field validation; API/network error + retry; 401 login ulang; 403 forbidden; 404 unavailable; 409 state conflict; 412 stale version; 429 retry-after. Jangan menganggap hide button = security.
+## WFO vs remote presentation
+WFO: backend memvalidasi trusted request network dan mengembalikan configured WorkLocation/kecamatan + match state. Frontend tidak membaca SSID atau menyatakan sendiri IP publik. Remote: tampilkan request approved, area label dan hasil GPS policy dari server. Jangan melakukan reverse lookup IP untuk kecamatan.
 
-## Acceptance dan skenario test UI
-- ATT-01 punch idempotent.
-- ATT-02 illegal punch sequence ditolak.
-- ATT-03 local day dari timezone shift.
-- ATT-04 self-approval adjustment ditolak.
-- ATT-05 manager scope enforced.
-- ATT-06 duplicate concurrent punch prevented.
-- Keyboard dapat mengoperasikan tabel/form/dialog; focus kembali setelah dialog; layout usable mobile.
-- Direct route tanpa izin menghasilkan 403/redirect UX yang tepat, tidak menampilkan cached sensitive data.
-- API error tidak mencetak token, PII, payload atau stack trace ke console.
+## Evidence privacy
+Private signed read URL hanya diminta setelah backend authz, gunakan dalam memori sesaat dan jangan cache/persist/log/analytics. Hapus object URL preview setelah selesai. Hanya synthetic photos. No face recognition, background tracking, geolocation outside punch.
 
-## TDD component/E2E
-Mock sesuai OpenAPI fixture; uji render states, submit success dan error, no duplicate submit, stale version recovery, permission-limited direct route, keyboard navigation dan viewport sempit. E2E data sintetis; hindari production account.
+## UI/test scenarios
+FA-01 alasan remote wajib; FA-02 manager keputusan wajib alasan; FA-03 self-approval/API 403; FA-04 capture permission hanya setelah klik; FA-05 preview retake; FA-06 GPS denied/stale/accuracy rendah; FA-07 WFO mismatch and server location; FA-08 remote pending/rejected blocks punch; FA-09 signed direct upload + confirm; FA-10 signed expiry retry; FA-11 storage quota prevents success; FA-12 scoped evidence URL and no persistent caching; FA-13 manager scope/masking; FA-14 keyboard/mobile/accessibility; FA-15 no sensitive console/telemetry. Add backend ATT-01–18 coverage in E2E contract.
