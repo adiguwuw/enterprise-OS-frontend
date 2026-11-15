@@ -40,3 +40,8 @@ Admin dengan role/scope berwenang mengelola radius GPS, accuracy threshold, shif
 FA-16 validasi nilai, alasan dan tanggal efektif; FA-17 unauthorized/out-of-scope; FA-18 versi/audit immutable; FA-19 maker-checker; FA-20 konflik tanggal atau stale update; FA-21 punch historis tetap memakai versi policy yang tercatat.
 
 API Admin policy yang dikonsumsi UI: GET /api/v1/attendance/admin/policies?work_location_id=; POST /api/v1/attendance/admin/policies; POST /api/v1/attendance/admin/policies/{id}/versions; POST /api/v1/attendance/admin/policy-versions/{id}/approve bila maker-checker aktif; GET /api/v1/attendance/admin/policies/{id}/history. Gunakan If-Match saat mengganti versi/draft yang mutable, reason dan effective date wajib. Jangan menganggap nilai policy tersimpan aktif sebelum API mengonfirmasi.
+
+## Nilai awal di UI Admin
+Tampilkan default demo timezone Asia/Jakarta; weekdays 09:00–17:00; break 12:00–13:00; grace 15 menit; radius GPS 150 m; max accuracy 100 m; max capture age 60 detik; foto 30 hari; metadata 365 hari. Batas backend: radius 25–500 m, accuracy 10–200 m, capture age 30–300 detik, retensi foto 1–90 hari, metadata 30–3650 hari. Nilai server merupakan source of truth. Office CIDR kosong/nonaktif sebelum Admin input dan verifikasi; jangan tampilkan status WFO siap sebelumnya.
+
+RBAC UI: Policy Admin mengubah policy tetapi tidak otomatis melihat foto; Approver berbeda menyetujui; HR Admin perlu evidence grant terpisah; Auditor read-only tanpa foto; IAM/Platform/Org Admin tidak mendapat attendance/HR akses implisit. Sajikan aksi dari capability API dan backend tetap melakukan checks.
