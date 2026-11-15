@@ -19,3 +19,7 @@ UI harus menjelaskan permission denied, GPS accuracy tidak memenuhi batas, jarin
 
 ## Design system dan aksesibilitas
 shadcn/ui + Tailwind semantic tokens. Status selalu label/icon selain warna. Responsive sidebar/table, accessible labels/errors/focus, keyboard flow, contrast target AA, reduced motion. Loading, empty, API error + request ID, 401, 403, 404, 409/412, timeout/quota states. Jangan menampilkan data sensitif pada URL atau cache persistent. Foto/koordinat hanya tampil pada view berizin dan tidak masuk analytics/console.
+
+
+## Dashboard Admin presensi
+Tambahkan halaman /app/admin/attendance/policies dan /app/admin/attendance/policies/:id/history untuk Admin berizin. Form mengelola radius GPS, accuracy maksimum, shift/timezone, kalender, retensi evidence, aturan exception, WorkLocation dan CIDR kantor. Tampilkan policy aktif, periode efektif, draft/pending approval, alasan dan ringkasan before/after. Versi historis read-only; perubahan membuat versi baru. Tampilkan action approval terpisah bila maker-checker aktif. Enforcement tetap di backend.
