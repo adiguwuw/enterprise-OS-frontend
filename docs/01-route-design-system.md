@@ -5,18 +5,17 @@
 - /app/dashboard
 - /app/organization, /app/organization/units/:id
 - /app/directory, /app/directory/:employeeId, /app/me
-- /app/admin/access (grant, roles, policies), /app/admin/audit
+- /app/admin/access, /app/admin/audit
 - /app/hr/employees, /app/hr/employees/:id
-- /app/<module> routes hanya dibuka bertahap sesuai fase.
+- /app/attendance, /app/attendance/punch, /app/attendance/history
+- /app/attendance/remote-work, /app/attendance/remote-work/new
+- /app/manager/attendance/requests, /app/manager/attendance/team
+Routes tampil sesuai capability untuk UX; backend tetap otoritatif.
 
-## Navigation
-Sidebar per domain dan disaring oleh capability endpoint untuk UX. Breadcrumb, page title, primary action, search/filter, data table, detail sheet/page, pagination, confirmation untuk destructive/state-changing actions. Jangan menyimpulkan user tidak punya akses hanya dari capability cache.
+## Attendance journeys
+Employee memeriksa mode dan policy → mengajukan WFH/WFA dengan tanggal/lokasi/alasan → melihat pending/approved/rejected + alasan manager → pada hari kerja memilih check-in/out → memberi izin kamera/GPS sekali untuk aksi → preview foto, accuracy dan location label → upload langsung ke private storage → konfirmasi punch → melihat receipt/status. WFO memperlihatkan lokasi kantor/kecamatan hasil konfigurasi dan status jaringan tervalidasi; WFH/WFA memperlihatkan request yang disetujui. Manager melihat request/team dalam scope, memberi keputusan dengan alasan, membuka bukti melalui izin sementara.
 
-## Design system
-shadcn/ui + Tailwind tokens. Semantic color tokens; status color selalu dilengkapi label/icon. Responsive sidebar collapsible, table-to-card pada layar sempit. Form label/hint/error; dialog fokus terperangkap; toast tidak menjadi satu-satunya status kritis. Loading skeleton, empty state dengan tindakan aman, error dengan retry/request ID, 403/404, stale/conflict (412) state.
+UI harus menjelaskan permission denied, GPS accuracy tidak memenuhi batas, jaringan kantor tidak cocok, request remote belum approved, file tidak valid, storage gagal/kuota penuh dan koreksi manual. Jangan memalsukan GPS/IP, menyimpulkan lokasi dari IP geolocation, melacak latar belakang, atau mengenali wajah.
 
-## Aksesibilitas
-Keyboard-only flow, focus visible, semantic headings, accessible name, aria-describedby untuk error, contrast AA target, reduced motion, tabel dapat dibaca screen reader. Jangan gunakan warna saja untuk status. Uji zoom dan viewport sempit.
-
-## UX privacy
-Masking mengikuti payload server. Hindari PII di URL, analytics, console. Jangan tampilkan data stale sebagai status berhasil. Payslip/private fields tidak pernah masuk dashboard umum.
+## Design system dan aksesibilitas
+shadcn/ui + Tailwind semantic tokens. Status selalu label/icon selain warna. Responsive sidebar/table, accessible labels/errors/focus, keyboard flow, contrast target AA, reduced motion. Loading, empty, API error + request ID, 401, 403, 404, 409/412, timeout/quota states. Jangan menampilkan data sensitif pada URL atau cache persistent. Foto/koordinat hanya tampil pada view berizin dan tidak masuk analytics/console.
