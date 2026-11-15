@@ -1,15 +1,15 @@
 # EnterpriseOS Frontend
 
-React + TypeScript portfolio UI for EnterpriseOS. All organizations, employees, policies, locations and demo evidence are fictional. Telkom Indonesia is only a public reference for organizational capability categories; no affiliation or confidential information is claimed.
+Antarmuka React + TypeScript untuk portofolio EnterpriseOS. Seluruh organisasi, pegawai, kebijakan, lokasi, dan bukti demo bersifat fiktif. Telkom Indonesia hanya menjadi referensi terbuka untuk kategori kapabilitas organisasi; proyek ini tidak berafiliasi dan tidak mengklaim memakai informasi internal.
 
 ## Blueprint
-See docs/README.md for routes, design system, accessibility, API contracts, tests and module journeys. Backend source of truth: https://github.com/adiguwuw/enterprise-OS-backend/tree/main/docs
+Lihat `docs/README.md` untuk route, design system, aksesibilitas, kontrak API, test, dan perjalanan tiap modul. Sumber kontrak backend: https://github.com/adiguwuw/enterprise-OS-backend/tree/main/docs
 
-## Stack and WSL
-React + TypeScript + Vite + shadcn/ui; run Node/package manager from WSL/Linux checkout and follow the committed lockfile. Do not mix Windows and WSL node_modules.
+## Stack dan WSL
+React + TypeScript + Vite + shadcn/ui. Jalankan Node dan package manager dari checkout WSL/Linux, ikuti lockfile yang ada, dan jangan mencampur `node_modules` Windows dengan WSL.
 
-## Attendance evidence
-Camera and GPS are requested only when the employee initiates a punch. WFO uses backend-validated office public egress IP mapped to configured WorkLocation; WFH/WFA requires an approved manager request with reasons. Each punch requires photo and GPS evidence. Browser uploads directly to a private Supabase Storage Free bucket using a short-lived server-issued signed URL; never send photo bytes through Vercel/API. Handle permission denial, upload failure and quota exhaustion clearly; no background location or face recognition. Use synthetic evidence only.
+## Bukti presensi
+Kamera dan GPS diminta hanya saat pegawai menekan tombol presensi. WFO divalidasi backend memakai IP egress publik kantor yang dikonfigurasi dan dipetakan ke WorkLocation; WFH/WFA memerlukan persetujuan atasan dengan alasan. Setiap punch membutuhkan foto dan bukti GPS. Browser mengunggah foto langsung ke private bucket Supabase Storage Free memakai signed URL singkat dari backend; foto tidak dikirim melalui Vercel/API. Tampilkan kegagalan izin, upload, dan kuota secara jelas. Tidak ada pelacakan latar belakang atau pengenalan wajah. Gunakan bukti sintetis.
 
-## Free deployment
-Vercel Hobby frontend/API demo, Neon Free PostgreSQL, selected free OIDC, Supabase Storage Free. Quotas and terms can change. No paid plan, card, custom paid domain or silent paid fallback. Hosted demo may pause at quota.
+## Deployment gratis
+Demo memakai Vercel Hobby, Neon Free, provider OIDC free yang dipilih, dan Supabase Storage Free. Kuota dan syarat dapat berubah. Jangan memakai plan berbayar, kartu, domain berbayar atau fallback berbayar. Demo hosted boleh dihentikan sementara ketika kuota habis.
