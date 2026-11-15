@@ -1,18 +1,15 @@
 # EnterpriseOS Frontend
 
-Frontend React + TypeScript untuk proyek portofolio EnterpriseOS. Semua perusahaan, pegawai, transaksi, dan data contoh adalah simulasi. Proyek ini tidak berafiliasi dengan Telkom dan tidak memakai data internal/rahasia Telkom.
+React + TypeScript portfolio UI for EnterpriseOS. All organizations, employees, policies, locations and demo evidence are fictional. Telkom Indonesia is only a public reference for organizational capability categories; no affiliation or confidential information is claimed.
 
-## Blueprint final
-Lihat `docs/README.md` untuk arsitektur frontend, route, design system, kontrak backend yang dikonsumsi, aksesibilitas, dan skenario uji per modul.
+## Blueprint
+See docs/README.md for routes, design system, accessibility, API contracts, tests and module journeys. Backend source of truth: https://github.com/adiguwuw/enterprise-OS-backend/tree/main/docs
 
-## Lingkungan kerja
-Pengembangan dilakukan dari WSL/Linux shell. UI menggunakan React, TypeScript dan shadcn/ui. Gunakan Node package manager yang tercatat di repo dan jangan mencampur dependency Windows/WSL.
+## Stack and WSL
+React + TypeScript + Vite + shadcn/ui; run Node/package manager from WSL/Linux checkout and follow the committed lockfile. Do not mix Windows and WSL node_modules.
 
-## API
-Panggilan HTTP melalui API Gateway. Kontrak otoritatif berada di [EnterpriseOS Backend](https://github.com/adiguwuw/enterprise-OS-backend/tree/main/docs).
+## Attendance evidence
+Camera and GPS are requested only when the employee initiates a punch. WFO uses backend-validated office public egress IP mapped to configured WorkLocation; WFH/WFA requires an approved manager request with reasons. Each punch requires photo and GPS evidence. Browser uploads directly to a private Supabase Storage Free bucket using a short-lived server-issued signed URL; never send photo bytes through Vercel/API. Handle permission denial, upload failure and quota exhaustion clearly; no background location or face recognition. Use synthetic evidence only.
 
-## Biaya
-Frontend di-deploy di Vercel Hobby dengan subdomain gratis. Jangan membeli domain, menambahkan service berbayar, memasang metode pembayaran, atau meng-upgrade plan. Saat kuota tercapai, demo boleh pause.
-
-## Status
-Repository ini memuat blueprint dan scaffold dokumentasi. Implementasi UI dilakukan bertahap sesuai acceptance criteria dan kontrak API.
+## Free deployment
+Vercel Hobby frontend/API demo, Neon Free PostgreSQL, selected free OIDC, Supabase Storage Free. Quotas and terms can change. No paid plan, card, custom paid domain or silent paid fallback. Hosted demo may pause at quota.
