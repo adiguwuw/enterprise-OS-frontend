@@ -23,3 +23,6 @@ shadcn/ui + Tailwind semantic tokens. Status selalu label/icon selain warna. Res
 
 ## Dashboard Admin presensi
 Tambahkan halaman /app/admin/attendance/policies dan /app/admin/attendance/policies/:id/history untuk Admin berizin. Form mengelola radius GPS, accuracy maksimum, shift/timezone, kalender, retensi evidence, aturan exception, WorkLocation dan CIDR kantor. Tampilkan policy aktif, periode efektif, draft/pending approval, alasan dan ringkasan before/after. Versi historis read-only; perubahan membuat versi baru. Tampilkan action approval terpisah bila maker-checker aktif. Enforcement tetap di backend.
+
+### Nilai yang ditampilkan pada dashboard
+Default seed demo: Asia/Jakarta; Senin–Jumat, shift 09:00–17:00, break 12:00–13:00; grace 15 menit; GPS radius 150 m; accuracy maksimum 100 m; usia GPS maksimum 60 detik; retensi foto 30 hari; metadata 365 hari. Tampilkan bounds server (radius 25–500 m, accuracy 10–200 m, usia GPS 30–300 detik, retensi foto 1–90 hari, metadata 30–3650 hari) dan pesan bahwa nilai di luar rentang ditolak. CIDR default kosong/nonaktif sampai admin memasukkan dan memverifikasi egress kantor. UI tidak boleh mengaktifkan WFO sendiri.
