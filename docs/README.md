@@ -1,6 +1,6 @@
 # EnterpriseOS Frontend — Blueprint Final
 
-React/TypeScript UI terpisah dari Go API repository: https://github.com/adiguwuw/enterprise-OS-backend. Status repo saat ini dokumentasi/scaffold. Data organisasi/pegawai fiktif; referensi Telkom hanya konteks publik, bukan struktur internal.
+React/TypeScript UI terpisah dari Express 5 + TypeScript API repository: https://github.com/adiguwuw/enterprise-OS-backend. Status repo saat ini dokumentasi/scaffold. Data organisasi/pegawai fiktif; referensi Telkom hanya konteks publik, bukan struktur internal.
 
 ## Review
 1. Keputusan dan PRD backend.
