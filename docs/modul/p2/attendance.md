@@ -38,3 +38,5 @@ Admin dengan role/scope berwenang mengelola radius GPS, accuracy threshold, shif
 
 ### Skenario UI policy
 FA-16 validasi nilai, alasan dan tanggal efektif; FA-17 unauthorized/out-of-scope; FA-18 versi/audit immutable; FA-19 maker-checker; FA-20 konflik tanggal atau stale update; FA-21 punch historis tetap memakai versi policy yang tercatat.
+
+API Admin policy yang dikonsumsi UI: GET /api/v1/attendance/admin/policies?work_location_id=; POST /api/v1/attendance/admin/policies; POST /api/v1/attendance/admin/policies/{id}/versions; POST /api/v1/attendance/admin/policy-versions/{id}/approve bila maker-checker aktif; GET /api/v1/attendance/admin/policies/{id}/history. Gunakan If-Match saat mengganti versi/draft yang mutable, reason dan effective date wajib. Jangan menganggap nilai policy tersimpan aktif sebelum API mengonfirmasi.
