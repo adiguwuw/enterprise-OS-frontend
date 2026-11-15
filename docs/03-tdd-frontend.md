@@ -1,19 +1,27 @@
 # Frontend SRS/TDD dan Test Strategy
 
 ## Functional expectations
-Login/logout; route guards UX; shell/menu; org tree; directory search/detail/visibility; employee admin lifecycle; access admin; audit reader; fase lanjutan mengikuti modul. Responsif, Bahasa Indonesia, permission-aware nav tetapi API tetap otoritatif.
+OIDC login/logout; route guards UX; organization tree; directory visibility; employee admin; access/audit; attendance remote request, manager decision, WFO/WFH/WFA punch, evidence upload, history and scoped review. Backend API adalah source of truth untuk role, location/IP match, approval, GPS policy dan status.
 
-## State model wajib per screen
-Loading/skeleton, success populated, empty, validation error, API error + retry/request ID, unauthenticated, forbidden, not found/out-of-scope, stale version conflict, offline/timeout, partial result bila API memang mendukung.
-
-## Test layers
-- Unit: format date/currency, policy-aware visibility helpers, form validation, error mapping.
-- Component: keyboard interaction, form errors, table pagination, dialogs/focus, loading/error/empty.
-- Contract: typed API schema matches OpenAPI examples; mocked response fixture generated/maintained against backend contract.
-- E2E: login test IdP, Phase 1 journeys, positive and negative access; screenshot not sole assertion.
-- Accessibility: automated checks plus keyboard manual walkthrough; color contrast/labels.
+## UI state
+Loading, populated, empty, validation, API error/retry/request ID, unauthenticated, forbidden, out-of-scope, stale conflict, offline/timeout, camera denied, GPS denied/stale/low accuracy, network mismatch, unapproved remote work, upload/confirm failure, storage quota reached. Jangan kehilangan draft alasan saat retry aman.
 
 ## Test IDs
-F-01 unauthenticated route redirect; F-02 OIDC state/nonce failure displays safe error; F-03 role-limited nav; F-04 direct URL forbidden still shows 403; F-05 search debounce/cancel/cursor; F-06 masked private field; F-07 form server 422 maps field; F-08 409/412 asks refresh without losing draft where safe; F-09 repeated submit uses same idempotency key; F-10 logout clears state/cache; F-11 keyboard dialog focus/escape; F-12 viewport 375px; F-13 no token/PII console logs; F-14 API down displays retry/correlation ID; F-15 no private data in URL/storage.
+F-01 unauthenticated redirect; F-02 OIDC state/nonce error; F-03 permission nav; F-04 forbidden direct URL; F-05 cursor search; F-06 masked field; F-07 422 maps to form; F-08 409/412 recovery; F-09 stable idempotency key retry; F-10 logout clears memory; F-11 dialog keyboard; F-12 mobile 375px; F-13 no PII/token console; F-14 API outage; F-15 no sensitive URL/storage.
+- FA-01 request WFH/WFA requires mode, dates and reason.
+- FA-02 manager queue respects scope; approve/reject requires reason and pending status.
+- FA-03 self-approval unavailable; API 403 rendered safely.
+- FA-04 punch asks camera/GPS only after explicit click and states purpose.
+- FA-05 preview allows retake/cancel before upload; no face recognition.
+- FA-06 GPS accuracy/location time shown; invalid/stale result gives recovery instructions.
+- FA-07 WFO shows server matched location/kecamatan only after API response; no client IP claims.
+- FA-08 remote punch disabled without approved request covering date.
+- FA-09 upload uses signed direct-to-storage URL, correct headers, then confirm; no photo POST to API.
+- FA-10 expired signed URL retries by requesting a new intent without duplicate punch.
+- FA-11 quota/storage failure never shows successful punch; preserves safe draft and offers manual procedure.
+- FA-12 evidence view requires authorization, no persistent signed URL/cache.
+- FA-13 team page filters and masks by backend response; no data from outside scope.
+- FA-14 keyboard/screenreader; no camera/GPS prompt on page load.
+- FA-15 error telemetry excludes image, coordinates, reasons and signed URL.
 
-Merge gate: format, lint, typecheck, unit/component/E2E for touched features, build; record actual command and outcome. Respect repo package lock.
+Test with synthetic fixtures and mocked browser media/location; no real employee evidence. Merge gate follows lockfile and actual available format/lint/typecheck/test/build commands.
