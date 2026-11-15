@@ -5,7 +5,7 @@
 3. Authenticated shell, responsive nav, accessible primitives, loading/empty/error/forbidden pages.
 4. Organization, directory, employee lifecycle with masks and scopes.
 5. IAM admin, grants and audit reader; negative direct-route tests.
-6. Phase 2 attendance: remote request and reason → manager decision/reason → attendance policy/location states → camera/GPS capture only on explicit punch → direct signed storage upload + confirm → punch receipt/history → scoped manager evidence review → adjustment exception UX.
+6. Phase 2 attendance: Dashboard Admin policy (radius/accuracy/shift/timezone/calendar/retention/exception, versi effective-dated + audit) → remote request and reason → manager decision/reason → attendance policy/location states → camera/GPS capture only on explicit punch → direct signed storage upload + confirm → punch receipt/history → scoped manager evidence review → adjustment exception UX.
 7. Leave/performance/payroll sandbox then Phase 3-5 only when backend contracts are accepted.
 
 ## Attendance implementation guardrails
